@@ -1,18 +1,50 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+  <Header />
+  <Posts :posts="posts" @get-new-posts="getPosts" />
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
-import HelloWorld from "./components/HelloWorld.vue";
+import { defineComponent } from "vue";
+import Header from "./components/Header.vue";
+import Posts from "./components/Posts.vue";
 
-@Options({
+export interface SinglePostType {
+  title: string;
+  thumb: string;
+  date: string;
+  excerpt: string;
+  url: string;
+}
+
+export default defineComponent({
+  name: "app",
   components: {
-    HelloWorld
+    Header,
+    Posts
+  },
+  data() {
+    return {
+      posts: [] as SinglePostType[]
+    };
+  },
+
+  mounted() {
+    this.getPosts();
+  },
+
+  methods: {
+    async getPosts() {
+      const currentIndex = this.posts.length > 0 ? this.posts.length + 1 : 0;
+      console.log(currentIndex);
+      const response = await fetch(
+        `http://localhost:3000/posts?_start=${currentIndex}&_limit=10`
+      );
+      const newPosts = await response.json();
+      this.posts = [...this.posts, ...newPosts];
+      console.log(newPosts);
+    }
   }
-})
-export default class App extends Vue {}
+});
 </script>
 
 <style>
@@ -20,7 +52,6 @@ export default class App extends Vue {}
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }

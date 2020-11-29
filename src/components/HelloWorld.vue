@@ -8,7 +8,7 @@
         >vue-cli documentation</a
       >.
     </p>
-    <h3>Installed CLI Plugins</h3>
+    <h3 class="dupa dupa--red">Installed CLI Plugins</h3>
     <ul>
       <li>
         <a
@@ -108,10 +108,14 @@ export default class HelloWorld extends Vue {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
+<style scoped lang="scss">
+.dupa {
+  font-size: 40px;
+  &--red {
+    color: red;
+  }
 }
+
 ul {
   list-style-type: none;
   padding: 0;
