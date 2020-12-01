@@ -25,14 +25,12 @@ export default {
 
     const handleFetchMore = async () => {
       state.isLoading = true;
-      setTimeout(async () => {
-        const anotherPosts = await fetchPosts(state.posts.length);
-        state.posts.push(...anotherPosts);
-        if (anotherPosts.length < 10) {
-          state.isFull = true;
-        }
-        state.isLoading = false;
-      }, 3000);
+      const anotherPosts = await fetchPosts(state.posts.length);
+      state.posts.push(...anotherPosts);
+      if (anotherPosts.length < 10) {
+        state.isFull = true;
+      }
+      state.isLoading = false;
     };
 
     onMounted(handleFetchMore);
@@ -41,7 +39,7 @@ export default {
       const element = scrollComponent.value;
       if (
         element &&
-        element.getBoundingClientRect().bottom < window.innerHeight &&
+        element.getBoundingClientRect().bottom < window.innerHeight + 20 &&
         !state.isFull
       ) {
         handleFetchMore();
@@ -71,8 +69,8 @@ export default {
   @media (min-width: 640px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  @media (min-width: 640px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 </style>
