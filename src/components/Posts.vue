@@ -2,85 +2,58 @@
   <div class="scrolling-component" ref="scrollComponent">
     <post v-for="post in posts" :key="post.title" :post="post" />
   </div>
-  <!-- <ul class="posts" ref="scrollComponent">
-    <li v-for="post in posts" :key="post.title" class="list-element">
-      {{ post.title }}
-    </li>
-  </ul> -->
-  <div ref="scrollComponent">Dupa</div>
-  <!-- <button @click="getPosts">Pobierz więcej</button> -->
+  <div v-if="state.isFull">KONIEC</div>
 </template>
 
 <script>
-// export interface SinglePostType {
-//   title: string;
-//   thumb: string;
-//   date: string;
-//   excerpt: string;
-//   url: string;
-// }
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, onUpdated, reactive } from "vue";
 import Post from "./Post.vue";
 
 const getNewPosts = async index => {
   console.log(index);
-  const response = await fetch(
-    `http://localhost:3000/posts?_start=${index}&_limit=10`
-  );
-  // const numberOfRecords = response.headers.get("x-total-count");
-  const newPosts = await response.json();
-  console.log({ newPosts });
-  return newPosts;
-  // console.log(newPosts);
-  // console.log(this.totalNumberOfRecords);
+  try {
+    const response = await fetch(
+      `http://localhost:3000/posts?_start=${index}&_limit=10`
+    );
+    const newPosts = await response.json();
+    return newPosts;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export default {
   components: { Post },
   name: "Posts",
 
-  methods: {
-    async getPosts() {
-      const currentIndex = this.posts.length > 0 ? this.posts.length + 1 : 0;
-      console.log(currentIndex);
-      const response = await fetch(
-        `http://localhost:3000/posts?_start=${currentIndex}&_limit=10`
-      );
-      const numberOfRecords = response.headers.get("x-total-count");
-      if (this.totalNumberOfRecords === 0 && numberOfRecords) {
-        this.totalNumberOfRecords = parseInt(numberOfRecords);
-      }
-      const newPosts = await response.json();
-      this.posts = [...this.posts, ...newPosts];
-      return newPosts;
-      // console.log(newPosts);
-      // console.log(this.totalNumberOfRecords);
-    }
-  },
-
   setup() {
     const posts = ref([]);
     const scrollComponent = ref(null);
+    const state = reactive({ isFull: false });
 
-    const loadMorePosts = async () => {
-      console.log("loadMorePosts");
+    const fetchPosts = async () => {
       const anotherPosts = await getNewPosts(posts.value.length);
       posts.value.push(...anotherPosts);
+      if (anotherPosts.length < 10) {
+        console.log("DDDDDDDDD");
+        state.isFull = true;
+      }
     };
 
-    onMounted(loadMorePosts);
+    onMounted(fetchPosts);
 
-    const handleScroll = e => {
-      console.log(e);
+    onUpdated(() => {
+      console.log(posts.value);
+    });
+
+    const handleScroll = () => {
       const element = scrollComponent.value;
-      console.log(element);
       if (
         element &&
-        element.getBoundingClientRect().bottom < window.innerHeight
+        element.getBoundingClientRect().bottom < window.innerHeight &&
+        !state.isFull
       ) {
-        console.log("load");
-        loadMorePosts();
-        // console.log(posts.value);
+        fetchPosts();
       }
     };
     onMounted(() => {
@@ -93,7 +66,8 @@ export default {
 
     return {
       posts,
-      scrollComponent
+      scrollComponent,
+      state
     };
   }
 };
