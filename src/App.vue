@@ -5,8 +5,8 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Header from "./components/Header.vue";
-import Posts from "./components/Posts.vue";
+import Header from "./components/header/Header.vue";
+import Posts from "./components/posts/Posts.vue";
 
 export default defineComponent({
   name: "app",
