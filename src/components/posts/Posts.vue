@@ -6,27 +6,39 @@
   <div v-if="state.isFull">KONIEC</div>
 </template>
 
-<script>
+<script lang="ts">
 import { ref, onMounted, onUnmounted, reactive } from "vue";
 import Post from "./post/Post.vue";
 import { fetchPosts } from "./utils/fetchPosts";
+
+export interface SinglePostType {
+  title: string;
+  thumb: string;
+  date: string;
+  excerpt: string;
+  url: string;
+}
 
 export default {
   components: { Post },
   name: "Posts",
 
   setup() {
-    const scrollComponent = ref(null);
+    const scrollComponent = ref<InstanceType<typeof HTMLDivElement> | null>(
+      null
+    );
     const state = reactive({
       isLoading: false,
       isFull: false,
-      posts: []
+      posts: [] as SinglePostType[]
     });
 
     const handleFetchMore = async () => {
       state.isLoading = true;
-      const anotherPosts = await fetchPosts(state.posts.length);
-      state.posts.push(...anotherPosts);
+      const anotherPosts: SinglePostType[] = await fetchPosts(
+        state.posts.length
+      );
+      state.posts = [...state.posts, ...anotherPosts];
       if (anotherPosts.length < 10) {
         state.isFull = true;
       }
