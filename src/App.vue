@@ -1,6 +1,6 @@
 <template>
   <Header />
-  <Posts :posts="posts" @get-new-posts="getPosts" />
+  <Posts />
 </template>
 
 <script lang="ts">
