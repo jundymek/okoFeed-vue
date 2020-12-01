@@ -1,5 +1,5 @@
 <template>
-  <div class="scrolling-component" ref="scrollComponent">
+  <div class="posts-container container" ref="scrollComponent">
     <post v-for="post in state.posts" :key="post.title" :post="post" />
   </div>
   <p v-if="state.isLoading">Loading...</p>
@@ -64,16 +64,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.posts {
-  background-color: paleturquoise;
-}
-
-.list-element {
-  height: 130px;
-}
-.scrolling-component {
-  width: 40%;
-  min-width: 300px;
-  margin: 0 auto;
+.posts-container {
+  display: grid;
+  gap: 1.5rem;
+  padding-top: 6rem;
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 </style>

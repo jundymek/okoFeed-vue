@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <div class="header__wrapper">
+    <div class="container">
       <div class="header__logo-wrapper">
         <EyeIcon />
         <h1 class="header__title">Oko Feed</h1>
@@ -42,23 +42,8 @@ export default {
     color: #f7fafc;
   }
 
-  &__wrapper {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-
-    @media (min-width: 640px) {
-      max-width: 640px;
-    }
-    @media (min-width: 768px) {
-      max-width: 768px;
-    }
-    @media (min-width: 1024px) {
-      max-width: 1024px;
-    }
-    @media (min-width: 1280px) {
-      max-width: 1280px;
-    }
-  }
+  /* &__wrapper {
+    @include container;
+  } */
 }
 </style>

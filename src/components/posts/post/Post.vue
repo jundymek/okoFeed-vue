@@ -3,6 +3,7 @@
     <h2>{{ post.title }}</h2>
   </div>
 </template>
+
 <script>
 export default {
   props: {
