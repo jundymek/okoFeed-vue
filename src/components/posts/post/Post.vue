@@ -44,7 +44,7 @@ export default {
   &__date {
     float: right;
     margin: 0.5rem;
-    color: #718096;
+    color: $color-grey;
     font-size: 0.875rem;
   }
 

@@ -30,6 +30,6 @@ export default {
 .eye {
   width: 2.5rem;
   height: 2.5rem;
-  color: #fc8181;
+  color: $color-pink;
 }
 </style>

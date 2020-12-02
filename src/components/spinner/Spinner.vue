@@ -26,9 +26,9 @@ export default {
   }
   &__item {
     text-indent: -9999rem;
-    border-top: 0.4rem solid #fc8181;
-    border-right: 0.4rem solid #fc8181;
-    border-bottom: 0.4rem solid #fc8181;
+    border-top: 0.4rem solid $color-pink;
+    border-right: 0.4rem solid $color-pink;
+    border-bottom: 0.4rem solid $color-pink;
     border-left: 0.4rem solid #181717;
     transform: translateZ(0);
     animation: load8 1.1s infinite linear;

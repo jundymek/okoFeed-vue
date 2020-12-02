@@ -99,7 +99,7 @@ export default {
 .end-paragraph {
   margin: 1rem 0 5rem 0;
   text-align: center;
-  color: #718096;
+  color: $color-grey;
   font-size: 0.75rem;
 }
 

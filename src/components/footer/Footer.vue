@@ -19,19 +19,19 @@ export default {
 .footer {
   height: 4rem;
   width: 100vw;
-  background-color: #2d3748;
+  background-color: $color-header-bg;
   position: fixed;
   bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   &__link {
-    color: #edf2f7;
+    color: $color-dark-white;
     margin-left: 0.25rem;
     text-decoration: underline;
   }
   &__paragraph {
-    color: #edf2f7;
+    color: $color-dark-white;
     font-size: 0.75rem;
   }
 }

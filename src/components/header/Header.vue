@@ -21,25 +21,29 @@ export default {
 <style scoped lang="scss">
 .header {
   position: fixed;
-  width: 100%;
+  width: 100vw;
   height: 4rem;
-  background-color: #2d3748;
+  background-color: $color-header-bg;
   display: flex;
   align-items: center;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  /* padding-top: 0.5rem;
+  padding-bottom: 0.5rem; */
   z-index: 100;
 
   &__logo-wrapper {
     display: flex;
     align-items: center;
-    margin: 0 0.5rem;
+    height: 100%;
+
+    @media (max-width: 640px) {
+      margin: 0 0.5rem;
+    }
   }
 
   &__title {
     padding-left: 0.5rem;
     font-weight: bold;
-    color: #f7fafc;
+    color: $color-dark-white;
   }
 
   /* &__wrapper {
