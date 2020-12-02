@@ -85,8 +85,10 @@ export default {
   gap: 1.5rem;
   padding-top: 6rem;
   position: relative;
-  width: 100%;
+  width: 95%;
+  margin: 0 auto;
   @media (min-width: 640px) {
+    width: 100%;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   @media (min-width: 1024px) {

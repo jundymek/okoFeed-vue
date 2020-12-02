@@ -18,6 +18,7 @@
 
 <script>
 import { getAlt } from "./utils/getAlt";
+
 export default {
   props: {
     post: Object
@@ -27,11 +28,14 @@ export default {
   }
 };
 </script>
+
 <style lang="scss" scoped>
 .post {
   padding: 1rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s;
+
   &:hover {
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
       0 4px 6px -2px rgba(0, 0, 0, 0.05);
