@@ -4,7 +4,7 @@
       <h3 class="post__title">{{ post.title }}</h3>
       <img
         v-bind:src="post.thumb"
-        alt=""
+        v-bind:alt="getAlt(post.title)"
         width="440"
         height="280"
         loading="lazy"
@@ -17,9 +17,13 @@
 </template>
 
 <script>
+import { getAlt } from "./utils/getAlt";
 export default {
   props: {
     post: Object
+  },
+  methods: {
+    getAlt
   }
 };
 </script>
