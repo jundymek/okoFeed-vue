@@ -6,16 +6,15 @@
   >
     <post v-for="post in state.posts" :key="post.title" :post="post" />
   </div>
-  <div class="spinner">
-    <p v-if="state.isLoading" class="loader"></p>
-  </div>
-  <div v-if="state.isFull">KONIEC</div>
+  <Spinner :isLoading="state.isLoading" />
+  <p v-if="state.isFull" class="end-paragraph">Nie ma więcej wiadomości</p>
 </template>
 
 <script lang="ts">
 import { ref, onMounted, onUnmounted, reactive } from "vue";
 import Post from "./post/Post.vue";
 import { fetchPosts } from "./utils/fetchPosts";
+import Spinner from "../spinner/Spinner.vue";
 
 export interface SinglePostType {
   title: string;
@@ -26,7 +25,7 @@ export interface SinglePostType {
 }
 
 export default {
-  components: { Post },
+  components: { Post, Spinner },
   name: "Posts",
 
   setup() {
@@ -41,16 +40,14 @@ export default {
 
     const handleFetchMore = async () => {
       state.isLoading = true;
-      setTimeout(async () => {
-        const anotherPosts: SinglePostType[] = await fetchPosts(
-          state.posts.length
-        );
-        state.posts = [...state.posts, ...anotherPosts];
-        if (anotherPosts.length < 10) {
-          state.isFull = true;
-        }
-        state.isLoading = false;
-      }, 3000);
+      const anotherPosts: SinglePostType[] = await fetchPosts(
+        state.posts.length
+      );
+      state.posts = [...state.posts, ...anotherPosts];
+      if (anotherPosts.length < 10) {
+        state.isFull = true;
+      }
+      state.isLoading = false;
     };
 
     onMounted(handleFetchMore);
@@ -97,42 +94,15 @@ export default {
   }
 }
 
-.spinner {
-  position: fixed;
-  z-index: 100;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+.end-paragraph {
+  margin: 1rem 0 5rem 0;
+  text-align: center;
+  color: #718096;
+  font-size: 0.75rem;
 }
 
 .inactive {
   opacity: 0.2;
   pointer-events: none;
-}
-
-.loader,
-.loader:after {
-  border-radius: 50%;
-  width: 3rem;
-  height: 3rem;
-}
-.loader {
-  /* font-size: 0.2rem; */
-  text-indent: -9999rem;
-  border-top: 0.4rem solid #fc8181;
-  border-right: 0.4rem solid #fc8181;
-  border-bottom: 0.4rem solid #fc8181;
-  border-left: 0.4rem solid #181717;
-  transform: translateZ(0);
-  animation: load8 1.1s infinite linear;
-}
-
-@keyframes load8 {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }
 </style>
